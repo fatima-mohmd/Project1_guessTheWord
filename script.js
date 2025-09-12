@@ -7,7 +7,59 @@ let letters = document.querySelectorAll(".letter")
 let wrongA = document.querySelectorAll(".wrong")
 let guessedContainer = document.querySelector(".guessedLetters")
 let wordA = []
-let animals = ["dog", "cat", "zebra", "bird", "fish", "turtle", "lion", "tiger"]
+let animals = [
+  "dog",
+  "cat",
+  "zebra",
+  "bird",
+  "fish",
+  "turtle",
+  "lion",
+  "tiger",
+  "snake",
+  "penguin",
+  "pig",
+  "frog",
+  "elephant",
+  "eagle",
+  "lizard",
+  "tuna",
+  "goat",
+  "shrimp",
+  "dolphin",
+  "shark",
+  "sheep",
+  "wolf",
+  "fox",
+  "bear",
+  "snail",
+  "salmon",
+  "chicken",
+  "camel",
+  "whale",
+  "owl",
+  "canary",
+  "duck",
+  "octopus",
+  "mouse",
+  "horse",
+  "deer",
+  "crab",
+  "cow",
+  "monkey",
+  "gorilla",
+  "flamingo",
+  "giraffe",
+  "hamster",
+  "squid",
+  "jellyfish",
+  "rabbit",
+  "jaguar",
+  "kangaroo",
+  "koala",
+  "lobster",
+  "panda",
+]
 let guess
 let guessedCount = 0
 let found = false
@@ -18,14 +70,20 @@ let random
 let randomAnimal
 let guessedLettersContainer = document.querySelectorAll(".guessedLetters")
 let guessedA = []
+let timerInterval
+let seconds
+
 const start = () => {
   button.value = "Reset"
   container.style.opacity = 1
   input.style.opacity = 1
   wrong.style.opacity = 1
+  playerStatus.innerText = "Guess a Letter in a lower case"
 }
 const reset = () => {
-  playerStatus.style.opacity = 0
+  playerStatus.innerText = "Guess a Letter in a lower case"
+
+  playerStatus.style.opacity = 1
   container.style.opacity = 1
   input.style.opacity = 1
   button.value = "Reset"
@@ -38,9 +96,11 @@ const generateWord = () => {
   random = Math.floor(Math.random() * animals.length)
   randomAnimal = animals[random]
   //////////////////////////////
-
+  guessedContainer.innerHTML = ""
   container.innerHTML = ""
   wordA = []
+  guessedA = []
+  guessedCount = 0
   for (let i = 0; i < randomAnimal.length; i++) {
     div = document.createElement("div")
     div.innerText = "_"
@@ -52,42 +112,50 @@ const generateWord = () => {
 }
 const findLetter = () => {
   found = false
-
   for (let i = 0; i < randomAnimal.length; i++) {
-    if (input.value === randomAnimal.charAt(i)) {
+    console.log("hELLO")
+
+    if (
+      input.value === randomAnimal.charAt(i) &&
+      !guessedA.includes(input.value)
+    ) {
+      console.log("lowered")
       wordA[i].innerText = input.value
       found = true
-      if (!guessedA.includes(input.value)) {
-        guessedCount++
-      }
-
-      console.log(guessedCount)
+      guessedCount++
     }
   }
-  // guessedA.push(input.value)
   if (!found) {
     for (let i = 0; i < wrongA.length; i++) {
-      if (wrongA[i].style.backgroundColor !== "red") {
+      if (
+        wrongA[i].style.backgroundColor !== "red" &&
+        !guessedA.includes(input.value)
+      ) {
         wrongA[i].style.backgroundColor = "red"
-        found = false
         wrongCount++
         break
       }
     }
   }
-  console.log(wrongCount)
   guessedLetters()
   winLoss()
   input.value = ""
 }
 const winLoss = () => {
-  if (wrongCount >= 3) {
-    playerStatus.innerText = "You loss"
+  if (
+    wrongCount >= 3 ||
+    document.querySelector("#txt").innerText === "EXPIRED"
+  ) {
     input.style.opacity = 0
+    playerStatus.innerText = "You loss the word is " + randomAnimal
+    document.querySelector("#txt").innerText = "EXPIRED"
+    // input.setAttribute("readOnly", true)
     button.value = "Play again"
-  } else if (guessedCount >= randomAnimal.length) {
+    clearInterval(timerInterval)
+  } else if (guessedCount == randomAnimal.length) {
     playerStatus.innerText = "You win"
     input.style.opacity = 0
+    guessedCount = 0
   }
 }
 const guessedLetters = () => {
@@ -99,17 +167,35 @@ const guessedLetters = () => {
     guessedContainer.appendChild(divG)
     guessedA.push(input.value)
   }
-
-  console.log("this is the divG.innerText " + divG.innerText)
 }
+
+const timer = () => {
+  clearInterval(timerInterval)
+  seconds = 60
+  timerInterval = setInterval(() => {
+    document.querySelector("#txt").innerText = seconds + "s "
+    seconds--
+    if (seconds < 0) {
+      clearInterval(timer)
+      document.querySelector("#txt").innerText = "EXPIRED"
+      winLoss()
+    }
+  }, 1000)
+}
+
 //done//////////////////////////////////////////////////////////
 button.addEventListener("click", () => {
   wrongCount = 0
+  timer()
   if (button.value === "start") {
     start()
   } else {
+    // input.setAttribute("readOnly", false)
+
     reset()
   }
+  // input.setAttribute("readOnly", false)
+
   generateWord()
 })
 input.addEventListener("input", () => {
