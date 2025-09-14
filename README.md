@@ -29,7 +29,7 @@
 
 ***
 - [ ] Different themes
-- [ ] Hint
+- [X] Hint
 - [ ] Different categories
 - [ ] Hang man
 - [ ] Style
