@@ -1,6 +1,19 @@
+// home
+let category = document.querySelector(".category")
+let arabic = document.querySelector("#ar")
+let english = document.querySelector("#eng")
+arabic.addEventListener("click", () => {
+  category.textContent = "حيوانات"
+})
+english.addEventListener("click", () => {
+  category.textContent = "Animals"
+})
+
 let container = document.querySelector(".word")
 let input = document.querySelector(".char")
-let button = document.querySelector(".submit")
+let submitButton = document.querySelector(".submit")
+let hintButton = document.querySelector(".hintButton")
+
 let playerStatus = document.querySelector("h2")
 let wrong = document.querySelector(".wrongContainer")
 let letters = document.querySelectorAll(".letter")
@@ -60,6 +73,59 @@ let animals = [
   "lobster",
   "panda",
 ]
+let Countries = [
+  "afghanistan",
+  "albania",
+  "algeria",
+  "argentina",
+  "armenia",
+  "australia",
+  "azerbaijan",
+  "bahrain",
+  "bangladesh",
+  "belgium",
+  "portugal",
+  "brazil",
+  "bulgaria",
+  "cambodia",
+  "cameroon",
+  "canada",
+  "china",
+  "colombia",
+  "croatia",
+  "denmark",
+  "egypt",
+  "ethiopia",
+  "finland",
+  "france",
+  "germany",
+  "ghana",
+  "greece",
+  "iceland",
+  "india",
+  "indonesia",
+  "iran",
+  "iraq",
+  "italy",
+  "jamaica",
+  "japan",
+  "jordan",
+  "kazakhstan",
+  "kenya",
+  "pakistan",
+  "kuwait",
+  "lebanon",
+  "libya",
+  "madagascar",
+  "malaysia",
+  "poland",
+  "mexico",
+  "morocco",
+  "netherlands",
+  "nigeria",
+  "norway",
+  "oman",
+]
 let guess
 let guessedCount = 0
 let found = false
@@ -72,9 +138,18 @@ let guessedLettersContainer = document.querySelectorAll(".guessedLetters")
 let guessedA = []
 let timerInterval
 let seconds
+let hinted = false
+let randomLetter
+let randomHint
 
+const checkCategory = () => {
+  if (document.querySelector(".animalsRB").checked) {
+    console.log("animals")
+  }
+}
+checkCategory()
 const start = () => {
-  button.value = "Reset"
+  submitButton.value = "Reset"
   container.style.opacity = 1
   input.style.opacity = 1
   wrong.style.opacity = 1
@@ -86,7 +161,7 @@ const reset = () => {
   playerStatus.style.opacity = 1
   container.style.opacity = 1
   input.style.opacity = 1
-  button.value = "Reset"
+  submitButton.value = "Reset"
   wrongA.forEach((wrongy) => {
     wrongy.style.backgroundColor = "rgb(203, 203, 203)"
   })
@@ -116,11 +191,11 @@ const findLetter = () => {
     console.log("hELLO")
 
     if (
-      input.value === randomAnimal.charAt(i) &&
+      input.value.toLowerCase() === randomAnimal.charAt(i) &&
       !guessedA.includes(input.value)
     ) {
       console.log("lowered")
-      wordA[i].innerText = input.value
+      wordA[i].innerText = input.value.toLowerCase()
       found = true
       guessedCount++
     }
@@ -139,6 +214,7 @@ const findLetter = () => {
   }
   guessedLetters()
   winLoss()
+
   input.value = ""
 }
 const winLoss = () => {
@@ -148,14 +224,17 @@ const winLoss = () => {
   ) {
     input.style.opacity = 0
     playerStatus.innerText = "You loss the word is " + randomAnimal
-    document.querySelector("#txt").innerText = "EXPIRED"
+    document.querySelector("#txt").style.opacity = 0
     // input.setAttribute("readOnly", true)
-    button.value = "Play again"
+    submitButton.value = "Play again"
     clearInterval(timerInterval)
   } else if (guessedCount == randomAnimal.length) {
+    clearInterval(timerInterval)
+    document.querySelector("#txt").style.opacity = 0
     playerStatus.innerText = "You win"
     input.style.opacity = 0
     guessedCount = 0
+    hintButton.style.display = "none"
   }
 }
 const guessedLetters = () => {
@@ -171,6 +250,8 @@ const guessedLetters = () => {
 
 const timer = () => {
   clearInterval(timerInterval)
+  document.querySelector("#txt").style.opacity = 1
+
   seconds = 60
   timerInterval = setInterval(() => {
     document.querySelector("#txt").innerText = seconds + "s "
@@ -183,11 +264,21 @@ const timer = () => {
   }, 1000)
 }
 
+const hint = () => {
+  randomHint = Math.floor(Math.random() * randomAnimal.length)
+  randomLetter = randomAnimal[randomHint]
+  console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
+  wordA[randomHint].innerText = randomLetter
+  hintButton.style.display = "none"
+}
 //done//////////////////////////////////////////////////////////
-button.addEventListener("click", () => {
+hintButton.addEventListener("click", hint)
+submitButton.addEventListener("click", () => {
+  hintButton.style.display = "block"
+
   wrongCount = 0
   timer()
-  if (button.value === "start") {
+  if (submitButton.value === "start") {
     start()
   } else {
     // input.setAttribute("readOnly", false)
