@@ -1,17 +1,17 @@
 // home
-let category = document.querySelector(".category")
-let arabic = document.querySelector("#ar")
-let english = document.querySelector("#eng")
-arabic.addEventListener("click", () => {
-  category.textContent = "حيوانات"
-})
-english.addEventListener("click", () => {
-  category.textContent = "Animals"
-})
+// let category = document.querySelector(".category")
+// let arabic = document.querySelector("#ar")
+// let english = document.querySelector("#eng")
+// arabic.addEventListener("click", () => {
+//   category.textContent = "حيوانات"
+// })
+// english.addEventListener("click", () => {
+//   category.textContent = "Animals"
+// })
 
 let container = document.querySelector(".word")
 let input = document.querySelector(".char")
-let submitButton = document.querySelector(".submit")
+let submitButton = document.querySelector(".submitButton")
 let hintButton = document.querySelector(".hintButton")
 
 let playerStatus = document.querySelector("h2")
@@ -142,21 +142,17 @@ let hinted = false
 let randomLetter
 let randomHint
 
-const checkCategory = () => {
-  if (document.querySelector(".animalsRB").checked) {
-    console.log("animals")
-  }
-}
+const checkCategory = () => {}
 checkCategory()
 const start = () => {
   submitButton.value = "Reset"
   container.style.opacity = 1
   input.style.opacity = 1
   wrong.style.opacity = 1
-  playerStatus.innerText = "Guess a Letter in a lower case"
+  playerStatus.innerText = "Guess a Letter"
 }
 const reset = () => {
-  playerStatus.innerText = "Guess a Letter in a lower case"
+  playerStatus.innerText = "Guess a Letter"
 
   playerStatus.style.opacity = 1
   container.style.opacity = 1
@@ -234,7 +230,7 @@ const winLoss = () => {
     playerStatus.innerText = "You win"
     input.style.opacity = 0
     guessedCount = 0
-    hintButton.style.display = "none"
+    hintButton.style.opacity = 0
   }
 }
 const guessedLetters = () => {
@@ -265,17 +261,20 @@ const timer = () => {
 }
 
 const hint = () => {
-  randomHint = Math.floor(Math.random() * randomAnimal.length)
-  randomLetter = randomAnimal[randomHint]
+  do {
+    randomHint = Math.floor(Math.random() * randomAnimal.length)
+    randomLetter = randomAnimal[randomHint]
+    guessedCount++
+    winLoss()
+  } while (guessedA.includes(randomLetter))
   console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
   wordA[randomHint].innerText = randomLetter
-  hintButton.style.display = "none"
+  hintButton.style.opacity = 0
 }
 //done//////////////////////////////////////////////////////////
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
-  hintButton.style.display = "block"
-
+  hintButton.style.opacity = 1
   wrongCount = 0
   timer()
   if (submitButton.value === "start") {

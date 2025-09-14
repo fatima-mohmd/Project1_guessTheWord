@@ -60,7 +60,7 @@ footer {
   margin-bottom: 20px;
 }
 .hintButton {
-  display: none;
+  opacity: 0;
 }
 /* home */
 main {
