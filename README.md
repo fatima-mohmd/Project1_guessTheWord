@@ -30,7 +30,7 @@
 ***
 - [ ] Different themes
 - [X] Hint
-- [ ] Different categories
+- [X] Different categories
 - [X] Hang man
 - [ ] Style
 - [ ] Add your own words
