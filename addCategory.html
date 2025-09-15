@@ -10,22 +10,43 @@
   <body>
     <div class="addCategory">
       <h1>Add your own category</h1>
-      <form action="">
-        <label for="">Enter your category name</label> <input type="text" />
-        <input type="button" value="next" class="nextButton"></input>
+      <form>
+        <label for="">Enter your category name</label> <input type="text" class="name" autofocus/>
+        <input type="button" value="next" class="nextButton">
       <fieldset disabled>
         <legend>Add your words</legend>
-        <label for="">enter the words</label>
-        <input list="new">
-        <datalist name="" id="new">
-          <option value="Hello"></option>
-          <option value="my"></option>
+        <label>enter the words</label>
+        <input list="newWord" class="newWord">
+        <datalist id="newWords">
 
         </datalist>
-        <input type="reset">
-        <input type="button" value="submit" class="submitButton"></input>
+        <input type="reset" class="resetCategory">
+        <input type="button" value="submit" class="submitCategoryButton">
       </fieldset>
       </form>
+      <button class="playButton">Play</button>
     </div>
+
+
+<div class="yourCategory">
+      <img src="photos/0.jpg" alt="">
+      <div class="game"><p id="txt"></p>
+        <h1 class="category"></h1>
+        <h2>Guess a Letter</h2>
+        <input type="text" class="char" maxlength="1"/>
+        <div class="word">
+
+        </div>
+        <section class="wrongContainer">
+
+        </section>
+        <section class="guessedLetters">
+
+        </section>
+        <input type="submit" class="submitButton" value="Reset"></input>
+        <input type="submit" class="hintButton" value="hint"></input>
+      </div>
+    </div>
+
   </body>
 </html>

@@ -1,4 +1,5 @@
-body {
+body,
+.yourCategory {
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -8,14 +9,14 @@ body {
   align-items: center;
 }
 .addCategory {
-  height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
-
+fieldset {
+  margin-top: 20px;
+}
 .game {
   display: flex;
   width: 60vw;
@@ -46,23 +47,14 @@ h1 {
   /* justify-content: space-around; */
   font-size: 50px;
   /* align-items: center; */
-  opacity: 0;
 }
 .char {
   /* display: block; */
   font-size: 25px;
-  opacity: 0;
 }
 .letter,
 .guess {
   margin: 15px;
-}
-.wrongContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  opacity: 0;
 }
 .wrong {
   border: 2px solid black;
@@ -85,9 +77,6 @@ footer {
 .hole {
   width: 90px;
   margin-bottom: 20px;
-}
-.hintButton {
-  opacity: 0;
 }
 /* home */
 main {
@@ -146,6 +135,19 @@ button {
   height: 40px;
   width: 110px;
   font-size: 20px;
+}
+.yourCategory {
+  display: none;
+}
+.animalsButton,
+.countriesButton,
+.fruitsButton,
+.addCategoryButton,
+.playButton {
+  width: 250px;
+  height: 50px;
+  font-size: 20px;
+  margin: 10px;
 }
 /* input {
   align-items: center;
