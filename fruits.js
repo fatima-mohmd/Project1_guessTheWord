@@ -8,58 +8,54 @@ let wrong = document.querySelector(".wrongContainer")
 let wrongA = document.querySelectorAll(".wrong")
 let guessedContainer = document.querySelector(".guessedLetters")
 let wordA = []
-let animals = [
-  "dog",
-  "cat",
-  "zebra",
-  "bird",
-  "fish",
-  "turtle",
-  "lion",
-  "tiger",
-  "snake",
-  "penguin",
-  "pig",
-  "frog",
-  "elephant",
-  "eagle",
-  "lizard",
-  "tuna",
-  "goat",
-  "shrimp",
-  "dolphin",
-  "shark",
-  "sheep",
-  "wolf",
-  "fox",
-  "bear",
-  "snail",
-  "salmon",
-  "chicken",
-  "camel",
-  "whale",
-  "owl",
-  "canary",
-  "duck",
-  "octopus",
-  "mouse",
-  "horse",
-  "deer",
-  "crab",
-  "cow",
-  "monkey",
-  "gorilla",
-  "flamingo",
-  "giraffe",
-  "hamster",
-  "squid",
-  "jellyfish",
-  "rabbit",
-  "jaguar",
-  "kangaroo",
-  "koala",
-  "lobster",
-  "panda",
+let fruits = [
+  "apple",
+  "strawberry",
+  "mango",
+  "orange",
+  "melon",
+  "apricot",
+  "pears",
+  "avocado",
+  "cherry",
+  "blackberry",
+  "raspberry",
+  "lime",
+  "banana",
+  "watermelon",
+  "guava",
+  "pear",
+  "coconut",
+  "date",
+  "fig",
+  "grape",
+  "kiwi",
+  "bean",
+  "cucumber",
+  "eggplant",
+  "potato",
+  "pepper",
+  "basil",
+  "pumpkin",
+  "tomato",
+  "corn",
+  "blueberry",
+  "brocoli",
+  "lettuce",
+  "cacao",
+  "carrot",
+  "onion",
+  "garlic",
+  "ginger",
+  "rosemary",
+  "Jackfruit",
+  "Kale",
+  "mushroom",
+  "pineapple",
+  "rice",
+  "spinach",
+  "lavender",
+  "taro",
 ]
 
 let guessedCount = 0
@@ -97,30 +93,30 @@ const reset = () => {
 }
 const generateWord = () => {
   //this code from stackOverflow
-  random = Math.floor(Math.random() * animals.length)
-  randomAnimal = animals[random]
+  random = Math.floor(Math.random() * fruits.length)
+  randomFruit = fruits[random]
   //////////////////////////////
   guessedContainer.innerHTML = ""
   container.innerHTML = ""
   wordA = []
   guessedA = []
   guessedCount = 0
-  for (let i = 0; i < randomAnimal.length; i++) {
+  for (let i = 0; i < randomFruit.length; i++) {
     div = document.createElement("div")
     div.innerText = "_"
     div.classList.add("letter")
     container.appendChild(div)
     wordA.push(div)
   }
-  console.log(randomAnimal)
+  console.log(randomFruit)
 }
 const findLetter = () => {
   found = false
-  for (let i = 0; i < randomAnimal.length; i++) {
+  for (let i = 0; i < randomFruit.length; i++) {
     console.log("hELLO")
 
     if (
-      input.value.toLowerCase() === randomAnimal.charAt(i) &&
+      input.value.toLowerCase() === randomFruit.charAt(i) &&
       !guessedA.includes(input.value)
     ) {
       console.log("lowered")
@@ -158,12 +154,12 @@ const winLoss = () => {
     document.querySelector("#txt").innerText === "EXPIRED"
   ) {
     input.style.opacity = 0
-    playerStatus.innerText = "You loss the word is " + randomAnimal
+    playerStatus.innerText = "You loss the word is " + randomFruit
     document.querySelector("#txt").style.opacity = 0
     // input.setAttribute("readOnly", true)
     submitButton.value = "Play again"
     clearInterval(timerInterval)
-  } else if (guessedCount == randomAnimal.length) {
+  } else if (guessedCount == randomFruit.length) {
     clearInterval(timerInterval)
     document.querySelector("#txt").style.opacity = 0
     playerStatus.innerText = "You win"
@@ -200,9 +196,11 @@ const timer = () => {
 }
 
 const hint = () => {
+  input.focus()
+
   do {
-    randomHint = Math.floor(Math.random() * randomAnimal.length)
-    randomLetter = randomAnimal[randomHint]
+    randomHint = Math.floor(Math.random() * randomFruit.length)
+    randomLetter = randomFruit[randomHint]
     guessedCount++
     winLoss()
   } while (guessedA.includes(randomLetter))
@@ -214,6 +212,7 @@ const hint = () => {
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
   input.focus()
+
   hintButton.style.opacity = 1
   wrongCount = 0
   timer()

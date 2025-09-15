@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="addCategory.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="addCategory">
+      <h1>Add your own category</h1>
+      <form action="">
+        <label for="">Enter your category name</label> <input type="text" />
+        <input type="button" value="next" class="nextButton"></input>
+      <fieldset disabled>
+        <legend>Add your words</legend>
+        <label for="">enter the words</label>
+        <input list="new">
+        <datalist name="" id="new">
+          <option value="Hello"></option>
+          <option value="my"></option>
+
+        </datalist>
+        <input type="reset">
+        <input type="button" value="submit" class="submitButton"></input>
+      </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

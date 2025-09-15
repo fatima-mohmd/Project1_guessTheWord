@@ -213,6 +213,8 @@ const hint = () => {
 //done//////////////////////////////////////////////////////////
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
+  input.focus()
+
   hintButton.style.opacity = 1
   wrongCount = 0
   timer()
