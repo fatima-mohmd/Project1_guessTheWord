@@ -3,9 +3,26 @@ body {
   width: 100vw;
   margin: 0;
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.game {
+  display: flex;
+  width: 60vw;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  height: 90vh;
+  border: solid black;
+}
+img {
+  align-self: flex-start;
+  height: 80vh;
+  margin-left: 50px;
+  width: 30vw;
+  border: solid black;
+  margin-top: 100px;
 }
 h1 {
   /* text-align: center; */

@@ -5,8 +5,7 @@ let hintButton = document.querySelector(".hintButton")
 
 let playerStatus = document.querySelector("h2")
 let wrong = document.querySelector(".wrongContainer")
-let letters = document.querySelectorAll(".letter")
-let wrongA = document.querySelectorAll(".wrong")
+// let wrongA = document.querySelectorAll(".wrong")
 let guessedContainer = document.querySelector(".guessedLetters")
 let wordA = []
 let countries = [
@@ -62,7 +61,6 @@ let countries = [
   "norway",
   "oman",
 ]
-let guess
 let guessedCount = 0
 let found = false
 let wrongCount
@@ -73,7 +71,6 @@ let randomCountry
 let guessedA = []
 let timerInterval
 let seconds
-let hinted = false
 let randomLetter
 let randomHint
 
@@ -93,9 +90,9 @@ const reset = () => {
   container.style.opacity = 1
   input.style.opacity = 1
   submitButton.value = "Reset"
-  wrongA.forEach((wrongy) => {
-    wrongy.style.backgroundColor = "rgb(203, 203, 203)"
-  })
+  // wrongA.forEach((wrongy) => {
+  //   wrongy.style.backgroundColor = "rgb(203, 203, 203)"
+  // })
 }
 const generateWord = () => {
   //this code from stackOverflow
@@ -116,6 +113,7 @@ const generateWord = () => {
   }
   console.log(randomCountry)
 }
+let c = 0
 const findLetter = () => {
   found = false
   for (let i = 0; i < randomCountry.length; i++) {
@@ -132,12 +130,18 @@ const findLetter = () => {
     }
   }
   if (!found) {
-    for (let i = 0; i < wrongA.length; i++) {
+    for (let i = 0; i < 3; i++) {
       if (
-        wrongA[i].style.backgroundColor !== "red" &&
+        // wrongA[i].style.backgroundColor !== "red" &&
         !guessedA.includes(input.value)
       ) {
-        wrongA[i].style.backgroundColor = "red"
+        // c += 1
+        // document.querySelector("img").getAttribute("src")
+        document
+          .querySelector("img")
+          .setAttribute("src", `photos/${wrongCount + 1}.jpg`)
+
+        // wrongA[i].style.backgroundColor = "red"
         wrongCount++
         break
       }
@@ -150,7 +154,7 @@ const findLetter = () => {
 }
 const winLoss = () => {
   if (
-    wrongCount >= 3 ||
+    wrongCount >= 6 ||
     document.querySelector("#txt").innerText === "EXPIRED"
   ) {
     input.style.opacity = 0
