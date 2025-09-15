@@ -31,7 +31,7 @@
 - [ ] Different themes
 - [X] Hint
 - [ ] Different categories
-- [ ] Hang man
+- [X] Hang man
 - [ ] Style
 - [ ] Add your own words
 - [ ] arabic version
