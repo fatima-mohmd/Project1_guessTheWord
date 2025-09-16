@@ -104,15 +104,15 @@ const reset = () => {
 const timer = () => {
   let seconds
   clearInterval(timerInterval)
-  document.querySelector("#txt").style.opacity = 1
+  document.querySelector("#timer").style.opacity = 1
 
   seconds = 60
   timerInterval = setInterval(() => {
-    document.querySelector("#txt").innerText = seconds + "s "
+    document.querySelector("#timer").innerText = seconds + "s "
     seconds--
     if (seconds < 0) {
       clearInterval(timer)
-      document.querySelector("#txt").innerText = "EXPIRED"
+      document.querySelector("#timer").innerText = "EXPIRED"
       winLoss()
     }
   }, 1000)
@@ -124,9 +124,9 @@ const hint = () => {
   do {
     randomHint = Math.floor(Math.random() * randomWord.length)
     randomLetter = randomWord[randomHint]
-    guessedCount++
-    winLoss()
   } while (guessedA.includes(randomLetter))
+  guessedCount++
+  winLoss()
   console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
   wordA[randomHint].innerText = randomLetter
   input.focus()
@@ -163,6 +163,8 @@ document.querySelector(".nextButton").addEventListener("click", () => {
   if (categoryName.value !== "") {
     console.log(categoryName.value)
     fieldset.disabled = false
+    fieldset.style.background = "#ebebeb"
+
     document.querySelector(".newWord").focus()
   }
 })
@@ -179,6 +181,7 @@ document.querySelector(".resetCategory").addEventListener("click", () => {
 })
 document.querySelector(".playButton").addEventListener("click", () => {
   if (categoryName.value !== "" && myList.length >= 2) {
+    timer()
     console.log("Play")
     generateWord()
     hintButton.style.display = "block"
@@ -190,4 +193,8 @@ document.querySelector(".playButton").addEventListener("click", () => {
     document.querySelector(".category").innerText = categoryName.value
     input.focus()
   }
+})
+document.querySelector(".backButton").addEventListener("click", () => {
+  document.querySelector(".addCategory").style.display = "flex"
+  document.querySelector(".yourCategory").style.display = "none"
 })

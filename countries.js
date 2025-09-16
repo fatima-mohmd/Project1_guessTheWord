@@ -144,6 +144,8 @@ const winLoss = () => {
     document.querySelector("#timer").style.opacity = 0
     playerStatus.innerText = "You win"
     input.style.display = "none"
+    hintButton.style.display = "none"
+    submitButton.value = "Play again"
   }
 }
 const guessedLetters = () => {
@@ -183,13 +185,15 @@ const hint = () => {
   guessedCount++
   console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
   wordA[randomHint].innerText = randomLetter
-  hintButton.disabled = true
+  hintButton.style.display = "none"
 
   winLoss()
   input.focus()
 }
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
+  document.querySelector("img").setAttribute("src", `photos/0.jpg`)
+
   input.focus()
   wrongCount = 0
   timer()

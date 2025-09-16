@@ -67,8 +67,10 @@ let animals = [
 
 const start = () => {
   submitButton.value = "Reset"
+  submitButton.style.display = "flex"
+
   container.style.display = "flex"
-  hintButton.style.display = "block"
+  hintButton.style.display = "flex"
   hintButton.disabled = false
 
   input.style.display = "block"
@@ -78,7 +80,8 @@ const start = () => {
 const reset = () => {
   document.querySelector("img").setAttribute("src", `photos/0.jpg`)
   playerStatus.innerText = "Guess a Letter"
-  hintButton.style.display = "block"
+  submitButton.style.display = "flex"
+  hintButton.style.display = "flex"
   hintButton.disabled = false
 
   container.style.display = "flex"
@@ -136,7 +139,7 @@ const winLoss = () => {
   ) {
     input.style.display = "none"
     hintButton.style.display = "none"
-    playerStatus.innerText = "You loss the word is " + randomAnimal
+    playerStatus.innerText = "You lost! the word was " + randomAnimal
     document.querySelector("#timer").style.opacity = 0
     submitButton.value = "Play again"
     clearInterval(timerInterval)
@@ -145,6 +148,8 @@ const winLoss = () => {
     document.querySelector("#timer").style.opacity = 0
     playerStatus.innerText = "You win"
     input.style.display = "none"
+    hintButton.style.display = "none"
+    submitButton.value = "Play again"
   }
 }
 const guessedLetters = () => {
@@ -184,13 +189,15 @@ const hint = () => {
   guessedCount++
   console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
   wordA[randomHint].innerText = randomLetter
-  hintButton.disabled = true
+  hintButton.style.display = "none"
 
   winLoss()
   input.focus()
 }
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
+  document.querySelector("img").setAttribute("src", `photos/0.jpg`)
+
   input.focus()
   wrongCount = 0
   timer()

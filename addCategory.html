@@ -11,45 +11,42 @@
     <div class="addCategory">
       <h1>Add your own category</h1>
       <form>
-        <h5>*You should enter a name</h5>
-        <label for="">Enter your category name</label> <input type="text" class="name" autofocus/>
-        <input type="button" value="next" class="nextButton">
-      <fieldset disabled>
-        <legend>Add your words</legend>
-                <h5>*You should enter at least 2 words</h5>
-
-        <label>enter the words</label>
-        <input list="newWord" class="newWord">
-        <datalist id="newWords">
-
-        </datalist>
-        <input type="reset" class="resetCategory">
-        <input type="button" value="submit" class="submitCategoryButton">
-      </fieldset>
+        <label for="">Enter a name and press next</label>
+        <input type="text" class="name" autofocus />
+        <input type="button" value="next" class="nextButton" />
+        <fieldset disabled>
+          <legend>Add your words</legend>
+          <h5>*You should enter at least 2 words</h5>
+          <div class="fieldSetDiv">
+            <label>enter the words</label>
+            <input list="newWord" class="newWord" />
+            <datalist id="newWords"> </datalist>
+            <input type="reset" class="resetCategory" />
+            <input type="button" value="submit" class="submitCategoryButton" />
+          </div>
+        </fieldset>
       </form>
       <button class="playButton">Play</button>
     </div>
 
-
-<div class="yourCategory">
-      <img src="photos/0.jpg" alt="">
-      <div class="game"><p id="txt"></p>
-        <h1 class="category"></h1>
-        <h2>Guess a Letter</h2>
-        <input type="text" class="char" maxlength="1"/>
-        <div class="word">
-
+    <div class="yourCategory" style="display: none">
+      <img src="photos/0.jpg" alt="" />
+      <div class="game">
+        <div class="nameTimer">
+          <h1 class="category"></h1>
+          <p id="timer"></p>
         </div>
-        <section class="wrongContainer">
-
-        </section>
-        <section class="guessedLetters">
-
-        </section>
-        <input type="submit" class="submitButton" value="Reset"></input>
-        <input type="submit" class="hintButton" value="hint"></input>
+        <h2>Guess a Letter</h2>
+        <input type="text" class="char" maxlength="1" />
+        <div class="word"></div>
+        <section class="wrongContainer"></section>
+        <section class="guessedLetters"></section>
+        <div class="buttons">
+          <input type="submit" class="submitButton" value="start" />
+          <input type="submit" class="hintButton" value="hint" />
+        </div>
+        <button class="submitButton backButton">Back</button>
       </div>
     </div>
-
   </body>
 </html>
