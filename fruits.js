@@ -65,6 +65,8 @@ const start = () => {
   submitButton.value = "Reset"
   container.style.display = "flex"
   hintButton.style.display = "block"
+  hintButton.disabled = false
+
   input.style.display = "block"
   input.focus()
   playerStatus.innerText = "Guess a Letter"
@@ -73,6 +75,8 @@ const reset = () => {
   document.querySelector("img").setAttribute("src", `photos/0.jpg`)
   playerStatus.innerText = "Guess a Letter"
   hintButton.style.display = "block"
+  hintButton.disabled = false
+
   container.style.display = "flex"
   input.style.display = "block"
   input.focus()
@@ -81,7 +85,7 @@ const reset = () => {
 const generateWord = () => {
   //this code from stackOverflow
   let random = Math.floor(Math.random() * fruits.length)
-  randomAnimal = animals[random]
+  randomFruit = fruits[random]
   //////////////////////////////
   guessedContainer.innerHTML = ""
   container.innerHTML = ""
@@ -166,20 +170,23 @@ const timer = () => {
 }
 
 const hint = () => {
+  let randomLetter
+  let randomHint
   do {
-    let randomHint = Math.floor(Math.random() * randomAnimal.length)
-    let randomLetter = randomAnimal[randomHint]
-    guessedCount++
-    winLoss()
+    randomHint = Math.floor(Math.random() * randomFruit.length)
+    randomLetter = randomFruit[randomHint]
   } while (guessedA.includes(randomLetter))
+  guessedCount++
   console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
   wordA[randomHint].innerText = randomLetter
-  hintButton.style.opacity = 0
+  hintButton.disabled = true
+
+  winLoss()
+  input.focus()
 }
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
   input.focus()
-  hintButton.style.opacity = 1
   wrongCount = 0
   timer()
   if (submitButton.value === "start") {
