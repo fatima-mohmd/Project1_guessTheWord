@@ -93,8 +93,12 @@ const guessedLetters = () => {
   }
 }
 const reset = () => {
+  document.querySelector("img").setAttribute("src", `photos/0.jpg`)
   playerStatus.innerText = "Guess a Letter"
   submitButton.value = "Reset"
+  input.disabled = false
+  input.focus()
+  generateWord()
 }
 
 const timer = () => {
@@ -125,7 +129,7 @@ const hint = () => {
   } while (guessedA.includes(randomLetter))
   console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
   wordA[randomHint].innerText = randomLetter
-  hintButton.disabled = true
+  input.focus()
 }
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
@@ -142,6 +146,8 @@ input.addEventListener("input", () => {
 document
   .querySelector(".submitCategoryButton")
   .addEventListener("click", () => {
+    document.querySelector(".newWord").focus()
+
     let inputWord = document.querySelector(".newWord")
     let word = document.createElement("option")
     let displayWord = document.createElement("h4")
@@ -157,6 +163,7 @@ document.querySelector(".nextButton").addEventListener("click", () => {
   if (categoryName.value !== "") {
     console.log(categoryName.value)
     fieldset.disabled = false
+    document.querySelector(".newWord").focus()
   }
 })
 let allWords
@@ -174,8 +181,13 @@ document.querySelector(".playButton").addEventListener("click", () => {
   if (categoryName.value !== "" && myList.length >= 2) {
     console.log("Play")
     generateWord()
-    document.querySelector(".yourCategory").style.display = "block"
+    hintButton.style.display = "block"
+    input.style.display = "block"
+    container.style.display = "flex"
+    guessedContainer.style.display = "flex"
+    document.querySelector(".yourCategory").style.display = "flex"
     document.querySelector(".addCategory").style.display = "none"
     document.querySelector(".category").innerText = categoryName.value
+    input.focus()
   }
 })
