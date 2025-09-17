@@ -16,7 +16,6 @@ let timerInterval
 let randomWord
 
 const generateWord = () => {
-  let div
   //this code from stackOverflow
   let random = Math.floor(Math.random() * myList.length)
   randomWord = myList[random]
@@ -35,16 +34,31 @@ const generateWord = () => {
   }
   console.log(randomWord)
 }
-const findLetter = () => {
+const findLetter = (e) => {
   found = false
+  let col = ""
+  let divG = document.createElement("div")
+  guessedContainer.style.display = "flex"
+
   for (let i = 0; i < randomWord.length; i++) {
     if (
-      input.value.toLowerCase() === randomWord[i] &&
+      input.value.toLowerCase() === randomWord.charAt(i) &&
       wordA[i].innerText === "_"
     ) {
+      console.log(i)
       wordA[i].innerText = input.value.toLowerCase()
       found = true
       guessedCount++
+      // col = guessedLetters("green")
+      // console.log(col)
+      if (!guessedA.includes(input.value)) {
+        divG.innerText = input.value
+        divG.classList.add("guess")
+        guessedContainer.appendChild(divG)
+        guessedA.push(input.value)
+        divG.style.backgroundColor = "green"
+        // input.value = ""
+      }
     }
   }
   if (!found) {
@@ -53,13 +67,22 @@ const findLetter = () => {
         .querySelector("img")
         .setAttribute("src", `photos/${wrongCount + 1}.jpg`)
       wrongCount++
+      if (!guessedA.includes(input.value)) {
+        divG.innerText = input.value
+        divG.classList.add("guess")
+        guessedContainer.appendChild(divG)
+        guessedA.push(input.value)
+        divG.style.backgroundColor = "red"
+      }
+    } else {
+      e.target.value = ""
+      input.value = ""
     }
   }
-  guessedLetters()
+  input.value = ""
   winLoss()
 }
 const winLoss = () => {
-  console.log("winLoss")
   if (
     wrongCount >= 6 ||
     document.querySelector("#timer").innerText === "EXPIRED"
@@ -79,7 +102,7 @@ const winLoss = () => {
     submitButton.value = "Play again"
   }
 }
-const guessedLetters = () => {
+const guessedLetters = (color) => {
   guessedContainer.style.display = "flex"
   if (!guessedA.includes(input.value)) {
     let divG = document.createElement("div")
@@ -87,11 +110,12 @@ const guessedLetters = () => {
     divG.classList.add("guess")
     guessedContainer.appendChild(divG)
     guessedA.push(input.value)
+    divG.style.backgroundColor = color
   }
   input.value = ""
+  return color
 }
 const reset = () => {
-  console.log("reset")
   wrongCount = 0
   document.querySelector("img").setAttribute("src", `photos/0.jpg`)
   playerStatus.innerText = "Guess a Letter"
@@ -144,21 +168,32 @@ const hint = () => {
 }
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
-  console.log("submit")
   document.querySelector("img").setAttribute("src", `photos/0.jpg`)
-
+  document.querySelector(".categoryName").style.display = "none"
   input.focus()
   wrongCount = 0
   timer()
-  reset()
+  if (submitButton.value === "start") {
+    start()
+  } else {
+    reset()
+  }
   generateWord()
 })
 let rButton = document.querySelector(".resetGameButton")
 rButton.addEventListener("click", () => {
   reset()
 })
-input.addEventListener("input", () => {
-  findLetter()
+input.addEventListener("input", (e) => {
+  if (input.value !== "") {
+    console.log(e.target)
+    findLetter(e)
+  } else {
+    console.log(input.value)
+    e.target.value = ""
+    input.value = ""
+    console.log(e)
+  }
 })
 document.querySelector(".nextButton").addEventListener("click", () => {
   if (categoryName.value !== "") {

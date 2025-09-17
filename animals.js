@@ -108,16 +108,31 @@ const generateWord = () => {
   }
   console.log(randomAnimal)
 }
-const findLetter = () => {
+const findLetter = (e) => {
   found = false
+  let col = ""
+  let divG = document.createElement("div")
+  guessedContainer.style.display = "flex"
+
   for (let i = 0; i < randomAnimal.length; i++) {
     if (
       input.value.toLowerCase() === randomAnimal.charAt(i) &&
       wordA[i].innerText === "_"
     ) {
+      console.log(i)
       wordA[i].innerText = input.value.toLowerCase()
       found = true
       guessedCount++
+      // col = guessedLetters("green")
+      // console.log(col)
+      if (!guessedA.includes(input.value)) {
+        divG.innerText = input.value
+        divG.classList.add("guess")
+        guessedContainer.appendChild(divG)
+        guessedA.push(input.value)
+        divG.style.backgroundColor = "green"
+        // input.value = ""
+      }
     }
   }
   if (!found) {
@@ -126,9 +141,21 @@ const findLetter = () => {
         .querySelector("img")
         .setAttribute("src", `photos/${wrongCount + 1}.jpg`)
       wrongCount++
+      // guessedLetters("red")
+      if (!guessedA.includes(input.value)) {
+        divG.innerText = input.value
+        divG.classList.add("guess")
+        guessedContainer.appendChild(divG)
+        guessedA.push(input.value)
+        divG.style.backgroundColor = "red"
+        // input.value = ""
+      }
+    } else {
+      e.target.value = ""
+      input.value = ""
     }
   }
-  guessedLetters()
+  input.value = ""
   winLoss()
 }
 
@@ -152,18 +179,21 @@ const winLoss = () => {
     submitButton.value = "Play again"
   }
 }
-const guessedLetters = () => {
+const guessedLetters = (color) => {
   guessedContainer.style.display = "flex"
   if (!guessedA.includes(input.value)) {
     let divG = document.createElement("div")
     divG.innerText = input.value
     divG.classList.add("guess")
+
     guessedContainer.appendChild(divG)
     guessedA.push(input.value)
+    divG.style.backgroundColor = color
+    console.log(divG)
   }
   input.value = ""
+  return color
 }
-
 const timer = () => {
   clearInterval(timerInterval)
   document.querySelector("#timer").style.opacity = 1
@@ -215,6 +245,14 @@ submitButton.addEventListener("click", () => {
   }
   generateWord()
 })
-input.addEventListener("input", () => {
-  findLetter()
+input.addEventListener("input", (e) => {
+  if (input.value !== "") {
+    console.log(e.target)
+    findLetter(e)
+  } else {
+    console.log(input.value)
+    e.target.value = ""
+    input.value = ""
+    console.log(e)
+  }
 })

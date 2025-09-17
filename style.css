@@ -103,6 +103,12 @@ h1 {
 .guess {
   margin: 10px;
 }
+.guess {
+  border: solid black;
+  padding: 10px;
+  margin: 5px;
+  font-size: 30px;
+}
 h2 {
   text-align: center;
   font-size: 35px;

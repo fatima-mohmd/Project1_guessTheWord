@@ -66,19 +66,22 @@ let countries = [
 ]
 
 const start = () => {
-  submitButton.value = "Reset"
-  container.style.display = "flex"
-  hintButton.style.display = "block"
+  document.querySelector("img").setAttribute("src", `photos/0.jpg`)
+  playerStatus.innerText = "Guess a Letter"
+  submitButton.style.display = "flex"
+  hintButton.style.display = "flex"
   hintButton.disabled = false
 
+  container.style.display = "flex"
   input.style.display = "block"
   input.focus()
-  playerStatus.innerText = "Guess a Letter"
+  submitButton.value = "Reset"
 }
 const reset = () => {
   document.querySelector("img").setAttribute("src", `photos/0.jpg`)
   playerStatus.innerText = "Guess a Letter"
-  hintButton.style.display = "block"
+  submitButton.style.display = "flex"
+  hintButton.style.display = "flex"
   hintButton.disabled = false
 
   container.style.display = "flex"
@@ -105,16 +108,31 @@ const generateWord = () => {
   }
   console.log(randomCountry)
 }
-const findLetter = () => {
+const findLetter = (e) => {
   found = false
+  let col = ""
+  let divG = document.createElement("div")
+  guessedContainer.style.display = "flex"
+
   for (let i = 0; i < randomCountry.length; i++) {
     if (
       input.value.toLowerCase() === randomCountry.charAt(i) &&
       wordA[i].innerText === "_"
     ) {
+      console.log(i)
       wordA[i].innerText = input.value.toLowerCase()
       found = true
       guessedCount++
+      // col = guessedLetters("green")
+      // console.log(col)
+      if (!guessedA.includes(input.value)) {
+        divG.innerText = input.value
+        divG.classList.add("guess")
+        guessedContainer.appendChild(divG)
+        guessedA.push(input.value)
+        divG.style.backgroundColor = "green"
+        // input.value = ""
+      }
     }
   }
   if (!found) {
@@ -123,9 +141,21 @@ const findLetter = () => {
         .querySelector("img")
         .setAttribute("src", `photos/${wrongCount + 1}.jpg`)
       wrongCount++
+      // guessedLetters("red")
+      if (!guessedA.includes(input.value)) {
+        divG.innerText = input.value
+        divG.classList.add("guess")
+        guessedContainer.appendChild(divG)
+        guessedA.push(input.value)
+        divG.style.backgroundColor = "red"
+        // input.value = ""
+      }
+    } else {
+      e.target.value = ""
+      input.value = ""
     }
   }
-  guessedLetters()
+  input.value = ""
   winLoss()
 }
 const winLoss = () => {
@@ -135,7 +165,7 @@ const winLoss = () => {
   ) {
     input.style.display = "none"
     hintButton.style.display = "none"
-    playerStatus.innerText = "You loss the word is " + randomCountry
+    playerStatus.innerText = "You lost! the word was " + randomCountry
     document.querySelector("#timer").style.opacity = 0
     submitButton.value = "Play again"
     clearInterval(timerInterval)
@@ -148,16 +178,19 @@ const winLoss = () => {
     submitButton.value = "Play again"
   }
 }
-const guessedLetters = () => {
+const guessedLetters = (color) => {
   guessedContainer.style.display = "flex"
   if (!guessedA.includes(input.value)) {
     let divG = document.createElement("div")
     divG.innerText = input.value
     divG.classList.add("guess")
     guessedContainer.appendChild(divG)
+
     guessedA.push(input.value)
+    divG.style.backgroundColor = color
   }
   input.value = ""
+  return color
 }
 
 const timer = () => {
@@ -211,6 +244,14 @@ submitButton.addEventListener("click", () => {
   }
   generateWord()
 })
-input.addEventListener("input", () => {
-  findLetter()
+input.addEventListener("input", (e) => {
+  if (input.value !== "") {
+    console.log(e.target)
+    findLetter(e)
+  } else {
+    console.log(input.value)
+    e.target.value = ""
+    input.value = ""
+    console.log(e)
+  }
 })
