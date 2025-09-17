@@ -27,7 +27,7 @@ const generateWord = () => {
   guessedA = []
   guessedCount = 0
   for (let i = 0; i < randomWord.length; i++) {
-    div = document.createElement("div")
+    let div = document.createElement("div")
     div.innerText = "_"
     div.classList.add("letter")
     container.appendChild(div)
@@ -42,71 +42,80 @@ const findLetter = () => {
       input.value.toLowerCase() === randomWord[i] &&
       wordA[i].innerText === "_"
     ) {
-      console.log("lowered")
       wordA[i].innerText = input.value.toLowerCase()
       found = true
       guessedCount++
     }
   }
   if (!found) {
-    for (let i = 0; i < 3; i++) {
-      if (!guessedA.includes(input.value)) {
-        document
-          .querySelector("img")
-          .setAttribute("src", `photos/${wrongCount + 1}.jpg`)
-        wrongCount++
-        break
-      }
+    if (!guessedA.includes(input.value)) {
+      document
+        .querySelector("img")
+        .setAttribute("src", `photos/${wrongCount + 1}.jpg`)
+      wrongCount++
     }
   }
   guessedLetters()
   winLoss()
-
-  input.value = ""
 }
 const winLoss = () => {
+  console.log("winLoss")
   if (
     wrongCount >= 6 ||
-    document.querySelector("#txt").innerText === "EXPIRED"
+    document.querySelector("#timer").innerText === "EXPIRED"
   ) {
-    input.disabled = true
-    playerStatus.innerText = "You loss the word is " + randomWord
-    document.querySelector("#txt").style.opacity = 0
+    input.style.display = "none"
+    hintButton.style.display = "none"
+    playerStatus.innerText = "You lost! the word was " + randomWord
+    document.querySelector("#timer").style.opacity = 0
     submitButton.value = "Play again"
     clearInterval(timerInterval)
   } else if (guessedCount == randomWord.length) {
     clearInterval(timerInterval)
-    document.querySelector("#txt").style.opacity = 0
+    document.querySelector("#timer").style.opacity = 0
     playerStatus.innerText = "You win"
-    input.disabled = true
-    hintButton.disabled = true
+    input.style.display = "none"
+    hintButton.style.display = "none"
+    submitButton.value = "Play again"
   }
 }
 const guessedLetters = () => {
-  let divG
+  guessedContainer.style.display = "flex"
   if (!guessedA.includes(input.value)) {
-    divG = document.createElement("div")
+    let divG = document.createElement("div")
     divG.innerText = input.value
     divG.classList.add("guess")
     guessedContainer.appendChild(divG)
     guessedA.push(input.value)
   }
+  input.value = ""
 }
 const reset = () => {
+  console.log("reset")
+  wrongCount = 0
   document.querySelector("img").setAttribute("src", `photos/0.jpg`)
   playerStatus.innerText = "Guess a Letter"
-  submitButton.value = "Reset"
-  input.disabled = false
+  submitButton.style.display = "flex"
+  hintButton.style.display = "flex"
+  hintButton.disabled = false
+
+  container.style.display = "flex"
+  input.style.display = "block"
   input.focus()
+  submitButton.value = "Reset"
   generateWord()
 }
 
 const timer = () => {
-  let seconds
   clearInterval(timerInterval)
   document.querySelector("#timer").style.opacity = 1
-
-  seconds = 60
+  let seconds
+  let timerOptions = document.querySelectorAll("option")
+  timerOptions.forEach((option) => {
+    if (option.selected) {
+      seconds = option.value
+    }
+  })
   timerInterval = setInterval(() => {
     document.querySelector("#timer").innerText = seconds + "s "
     seconds--
@@ -126,63 +135,82 @@ const hint = () => {
     randomLetter = randomWord[randomHint]
   } while (guessedA.includes(randomLetter))
   guessedCount++
-  winLoss()
   console.log(`random index is ${randomHint} and the letter is ${randomLetter}`)
   wordA[randomHint].innerText = randomLetter
+  hintButton.style.display = "none"
+
+  winLoss()
   input.focus()
 }
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
+  console.log("submit")
+  document.querySelector("img").setAttribute("src", `photos/0.jpg`)
+
   input.focus()
-  hintButton.disabled = false
   wrongCount = 0
   timer()
+  reset()
+  generateWord()
+})
+let rButton = document.querySelector(".resetGameButton")
+rButton.addEventListener("click", () => {
   reset()
 })
 input.addEventListener("input", () => {
   findLetter()
 })
-
-document
-  .querySelector(".submitCategoryButton")
-  .addEventListener("click", () => {
-    document.querySelector(".newWord").focus()
-
-    let inputWord = document.querySelector(".newWord")
-    let word = document.createElement("option")
-    let displayWord = document.createElement("h4")
-    word.value = inputWord.value
-    document.querySelector("datalist").appendChild(word)
-    fieldset.appendChild(displayWord)
-    displayWord.innerText = inputWord.value
-    myList.push(inputWord.value)
-    inputWord.value = ""
-    console.log(myList)
-  })
 document.querySelector(".nextButton").addEventListener("click", () => {
   if (categoryName.value !== "") {
     console.log(categoryName.value)
     fieldset.disabled = false
-    fieldset.style.background = "#ebebeb"
+    fieldset.style.background = "white"
 
     document.querySelector(".newWord").focus()
   }
 })
 let allWords
+const addRemove = () => {
+  let inputWord
+  let allWords
+  document
+    .querySelector(".submitCategoryButton")
+    .addEventListener("click", () => {
+      document.querySelector(".newWord").focus()
+
+      inputWord = document.querySelector(".newWord")
+      let word = document.createElement("option")
+      let displayWord = document.createElement("h4")
+      word.value = inputWord.value
+      document.querySelector("datalist").appendChild(word)
+      fieldset.appendChild(displayWord)
+      displayWord.innerText = inputWord.value
+      myList.push(inputWord.value)
+      inputWord.value = ""
+      console.log(myList)
+      displayWord.addEventListener("dblclick", () => {
+        fieldset.removeChild(displayWord)
+        myList = myList.filter((w) => w !== displayWord.innerText)
+        console.log("this is my list " + myList)
+      })
+    })
+}
 document.querySelector(".resetCategory").addEventListener("click", () => {
   categoryName.value = ""
   categoryName.focus()
-  categoryName.setAttribute("autofocus", "true")
   fieldset.disabled = true
   allWords = document.querySelectorAll("h4")
+  fieldset.style.backgroundColor = "#c3c3c3ff"
+
   allWords.forEach((word2) => {
     fieldset.removeChild(word2)
   })
 })
 document.querySelector(".playButton").addEventListener("click", () => {
+  document.querySelector("img").setAttribute("src", `photos/0.jpg`)
+
   if (categoryName.value !== "" && myList.length >= 2) {
     timer()
-    console.log("Play")
     generateWord()
     hintButton.style.display = "block"
     input.style.display = "block"
@@ -194,7 +222,8 @@ document.querySelector(".playButton").addEventListener("click", () => {
     input.focus()
   }
 })
-document.querySelector(".backButton").addEventListener("click", () => {
+document.querySelector(".formBackButton").addEventListener("click", () => {
   document.querySelector(".addCategory").style.display = "flex"
   document.querySelector(".yourCategory").style.display = "none"
 })
+addRemove()

@@ -11,22 +11,35 @@
     <div class="addCategory">
       <h1>Add your own category</h1>
       <form>
-        <label for="">Enter a name and press next</label>
-        <input type="text" class="name" autofocus />
-        <input type="button" value="next" class="nextButton" />
+        <div class="categoryName">
+          <label for="">Enter the category name</label>
+          <input type="text" class="name" autofocus />
+          <label>Set your timer</label>
+          <select>
+            <option value="60">60s</option>
+            <option value="90">90s</option>
+            <option value="120">120s</option>
+          </select>
+          <input type="button" value="Next" class="nextButton" />
+        </div>
         <fieldset disabled>
           <legend>Add your words</legend>
           <h5>*You should enter at least 2 words</h5>
+          <h5>*You can double click the word to remove it from the list</h5>
+
           <div class="fieldSetDiv">
-            <label>enter the words</label>
+            <label>Enter the words</label>
             <input list="newWord" class="newWord" />
             <datalist id="newWords"> </datalist>
             <input type="reset" class="resetCategory" />
-            <input type="button" value="submit" class="submitCategoryButton" />
+            <input type="button" value="Submit" class="submitCategoryButton" />
           </div>
         </fieldset>
       </form>
       <button class="playButton">Play</button>
+      <button class="submitButton backButton">
+        <a href="categories.html">Back</a>
+      </button>
     </div>
 
     <div class="yourCategory" style="display: none">
@@ -42,10 +55,14 @@
         <section class="wrongContainer"></section>
         <section class="guessedLetters"></section>
         <div class="buttons">
-          <input type="submit" class="submitButton" value="start" />
-          <input type="submit" class="hintButton" value="hint" />
+          <input
+            type="submit"
+            class="submitButton resetGameButton"
+            value="Reset"
+          />
+          <input type="submit" class="hintButton" value="Hint" />
         </div>
-        <button class="submitButton backButton">Back</button>
+        <button class="submitButton formBackButton">Back</button>
       </div>
     </div>
   </body>

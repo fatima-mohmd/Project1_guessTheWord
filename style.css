@@ -74,11 +74,24 @@ img {
   width: 30vw;
   margin-top: 100px;
 }
+.categoryName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.categoryName label {
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-left: 40px;
+}
 h1 {
   font-size: 80px;
   padding: 5px;
   margin-bottom: 50px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 .word,
 .guessedLetters {
@@ -179,7 +192,8 @@ form {
   background: #a00d3f;
 }
 input[type="text"],
-.newWord {
+.newWord,
+select {
   width: 200px;
   height: 35px;
   font-size: 20px;
@@ -221,15 +235,15 @@ legend {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  background: #ff0055; /* لون واحد لكل زر */
+  background: #ff0055;
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* يعطى شعور بالرش */
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .addCategoryButton {
-  background-color: #710026; /* لون واحد لكل زر */
+  background-color: #710026;
   display: block;
   margin: 15px auto;
   padding: 14px;
@@ -240,7 +254,7 @@ legend {
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* يعطى شعور بالرش */
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .backButton {

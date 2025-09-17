@@ -163,7 +163,13 @@ const guessedLetters = () => {
 const timer = () => {
   clearInterval(timerInterval)
   document.querySelector("#timer").style.opacity = 1
-  let seconds = 60
+  let seconds
+  let timerOptions = document.querySelectorAll("option")
+  timerOptions.forEach((option) => {
+    if (option.selected) {
+      seconds = option.value
+    }
+  })
   timerInterval = setInterval(() => {
     document.querySelector("#timer").innerText = seconds + "s "
     seconds--
@@ -193,6 +199,7 @@ const hint = () => {
 hintButton.addEventListener("click", hint)
 submitButton.addEventListener("click", () => {
   document.querySelector("img").setAttribute("src", `photos/0.jpg`)
+  document.querySelector(".categoryName").style.display = "none"
 
   input.focus()
   wrongCount = 0
