@@ -31,6 +31,6 @@
 - [ ] arabic version
 ***
 ### Credits
-#### Markdown Guide: [ia.net](https://ia.net/writer/support/general/markdown-guide)
-#### Markdown Cheatsheet: [GitHub](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
+#### ["Random" code from stackOverflow](https://stackoverflow.com/questions/20358980/random-word-from-array-list)
+
 ***
